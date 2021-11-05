@@ -5,7 +5,7 @@ Reddit's Deluxe Editor is buggy when pasting.
 When using Markdown modus, a codeblock needs to have
 4 spaces preceding every line.
 
-Edit your code here and click "Done".
+Iunsert and edit your code here and click "Done".
 Your code, including the extra spaces as well as empty lines before and after,
 gets copied to the clipboard and can be pasted to Reddit's Markdown editor.
 
@@ -13,10 +13,12 @@ gets copied to the clipboard and can be pasted to Reddit's Markdown editor.
 Python 3.4+
 
 # Installation
-Move or copy the script file to a directory in your `$PATH` and give permission to run as a program.
+Move the script file to a directory in your `$PATH` and give permission to run as a program.
 
-    user@machine:~/Downloads$ mv redcode ~/.local/bin
-    user@machine:~/Downloads$ chmod +x ~/.local/bin/redcode
+    user@machine:~/Downloads$ mv redcode.py ~/.local/bin
+    user@machine:~/Downloads$ chmod +x ~/.local/bin/redcode.py
+
+Run by calling from command line.
 
 ## How to use
 * Enter text you want to see as codeblock on Reddit.
