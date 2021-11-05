@@ -11,9 +11,9 @@ class Buttons(ttk.Frame):
         self.clear = ttk.Button(master=self, text="Clear", command=parent.clear)
         self.done = ttk.Button(master=self, text="Done", command=parent.done)
 
-        self.open.grid(row=0, column=0)
-        self.clear.grid(row=0, column=1)
-        self.done.grid(row=0, column=2)
+        self.open.pack(side=tk.LEFT)
+        self.clear.pack(side=tk.LEFT)
+        self.done.pack(side=tk.LEFT)
 
 
 class Editor(ttk.Frame):

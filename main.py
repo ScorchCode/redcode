@@ -24,11 +24,8 @@ class App(tk.Tk):
         self.editor = frames.Editor(parent=self)
         self.button = frames.Buttons(parent=self)
 
-        self.grid_rowconfigure(1, weight=1)
-        self.grid_columnconfigure(0, weight=1)
-
-        self.button.grid(sticky=tk.EW)
-        self.editor.grid(sticky=tk.NSEW)
+        self.button.pack(expand=True, fill=tk.X)
+        self.editor.pack(expand=True, fill=tk.BOTH)
 
     def clear(self):
         """Clear text from editor."""
