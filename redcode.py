@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 from pathlib import Path
 import tkinter as tk
 from tkinter import filedialog, messagebox, ttk
