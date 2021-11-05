@@ -6,11 +6,13 @@ from tkinter import ttk
 class Buttons(ttk.Frame):
     def __init__(self, parent):
         super().__init__(master=parent)
+        self.open = ttk.Button(master=self, text="Open", command=parent.open_file)
         self.clear = ttk.Button(master=self, text="Clear", command=parent.clear)
         self.done = ttk.Button(master=self, text="Done", command=parent.done)
 
-        self.clear.grid(row=0, column=0, sticky=tk.E)
-        self.done.grid(row=0, column=1, sticky=tk.E)
+        self.open.grid(row=0, column=0)
+        self.clear.grid(row=0, column=1)
+        self.done.grid(row=0, column=2)
 
 
 class Editor(ttk.Frame):

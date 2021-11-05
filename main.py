@@ -1,6 +1,6 @@
-
+from pathlib import Path
 import tkinter as tk
-from tkinter import ttk
+from tkinter import messagebox, filedialog
 
 import frames
 
@@ -33,8 +33,18 @@ class App(tk.Tk):
         self.clipboard_clear()
         self.clipboard_append(codeblock)
 
-    def from_clipboard(self):
-        pass
+        messagebox.showinfo(
+            title="Done",
+            message="Codeblock copied to clipboard.\nPaste on Reddit\nin Markdown modus."
+        )
+
+    def open_file(self):
+        textfile = Path(filedialog.askopenfilename(
+            title="Open a file",
+            initialdir=Path("~").expanduser()
+        ))
+        self.clear()
+        self.editor.text.insert(1.0, textfile.read_text())
 
 
 if __name__ == "__main__":
