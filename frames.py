@@ -3,6 +3,18 @@ import tkinter as tk
 from tkinter import ttk
 
 
+class Buttons(ttk.Frame):
+    def __init__(self, parent):
+        super().__init__(master=parent)
+        self.from_clipboard = ttk.Button(master=self, text="From Clipboard")
+        self.clear = ttk.Button(master=self, text="Clear")
+        self.done = ttk.Button(master=self, text="Done")
+
+        self.from_clipboard.grid(row=0, column=0, sticky=tk.E)
+        self.clear.grid(row=0, column=1, sticky=tk.E)
+        self.done.grid(row=0, column=2, sticky=tk.E)
+
+
 class Editor(ttk.Frame):
     def __init__(self, parent):
         super().__init__(master=parent)
