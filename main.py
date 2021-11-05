@@ -1,11 +1,11 @@
 from pathlib import Path
 import tkinter as tk
-from tkinter import ttk, messagebox, filedialog
+from tkinter import filedialog, messagebox, ttk
 
 
 class App(tk.Tk):
     """
-    A Python + Tkinter app that adds 4 spaces before every line.
+    A Python + Tkinter text editor that adds 4 spaces before every line.
 
     Reddit's Deluxe Editor is buggy when pasting.
     When pasting code in Markdown modus, a codeblock needs to have
@@ -32,11 +32,12 @@ class App(tk.Tk):
     def done(self):
         """Copy markdown formatted codeblock to clipboard."""
         indent = "    "
-        codeblock = indent
+        codeblock = "\n" + indent
         for c in self.editor.text.get(1.0, "end-1c"):
             codeblock += c
             if c == "\n":
                 codeblock += indent
+        codeblock += "\n"
 
         self.clipboard_clear()
         self.clipboard_append(codeblock)
