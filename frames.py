@@ -4,6 +4,7 @@ from tkinter import ttk
 
 
 class Buttons(ttk.Frame):
+    """A tkinter.Frame with Buttons."""
     def __init__(self, parent):
         super().__init__(master=parent)
         self.open = ttk.Button(master=self, text="Open", command=parent.open_file)
@@ -16,6 +17,7 @@ class Buttons(ttk.Frame):
 
 
 class Editor(ttk.Frame):
+    """A tkinter.Frame showing a text widget with scrollbars."""
     def __init__(self, parent):
         super().__init__(master=parent)
         self.text = tk.Text(

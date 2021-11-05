@@ -6,6 +6,17 @@ import frames
 
 
 class App(tk.Tk):
+    """
+    A Python + Tkinter app that adds 4 Spaces before every line.
+
+    Reddit's Deluxe Editor is buggy when pasting.
+    When pasting code in Markdown modus, a codeblock needs to have
+    4 space preceeding every line.
+
+    Edit your code here and click "Done".
+    Your code, including the extra spaces, gets copied to the clipboard
+    and can be pasted to Reddit's Markdown editor.
+    """
     def __init__(self):
         super().__init__()
         self.title("Reddit Codeblock Pasting Crutch")
@@ -20,9 +31,11 @@ class App(tk.Tk):
         self.editor.grid(sticky=tk.NSEW)
 
     def clear(self):
+        """Clear text from editor."""
         self.editor.text.delete(1.0, "end")
 
     def done(self):
+        """Copy markdown formatted codeblock to clipboard."""
         indent = "    "
         codeblock = indent
         for c in self.editor.text.get(1.0, "end-1c"):
@@ -39,6 +52,7 @@ class App(tk.Tk):
         )
 
     def open_file(self):
+        """Replace current text with file content."""
         textfile = Path(filedialog.askopenfilename(
             title="Open a file",
             initialdir=Path("~").expanduser()
