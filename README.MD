@@ -9,6 +9,8 @@ Insert and edit your code here and click "Done".
 Your code, including the extra spaces as well as empty lines before and after,
 gets copied to the clipboard and can be pasted to Reddit's Markdown editor.
 
+![redcode](https://user-images.githubusercontent.com/47459835/140605211-73c25937-57bb-4d03-82d6-8999a261ff89.png)
+
 # Requirements
 Python 3.4+
 
