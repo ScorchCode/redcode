@@ -1,4 +1,18 @@
 #!/usr/bin/env python3
+"""
+A Python + Tkinter text editor that adds 4 spaces before every line.
+
+Reddit's Deluxe Editor is buggy when pasting.
+When pasting code in Markdown modus, a codeblock needs to have
+4 spaces preceding every line.
+
+Edit your code here and click "Done".
+Your code, including the extra spaces, gets copied to the clipboard
+and can be pasted to Reddit's Markdown editor.
+
+LICENSE: MIT
+see https://github.com/ScorchCode/redcode/blob/main/LICENSE
+"""
 
 from pathlib import Path
 import tkinter as tk
@@ -7,15 +21,23 @@ from tkinter import filedialog, messagebox, ttk
 
 class App(tk.Tk):
     """
-    A Python + Tkinter text editor that adds 4 spaces before every line.
+    The main tkinter window.
 
-    Reddit's Deluxe Editor is buggy when pasting.
-    When pasting code in Markdown modus, a codeblock needs to have
-    4 spaces preceding every line.
+    Attributes
+    ----------
+    editor: class Editor
+        A ttk.Frame showing Text and Scrollbars.
+    button: class Buttons
+        A ttk.Frame with Buttons.
 
-    Edit your code here and click "Done".
-    Your code, including the extra spaces, gets copied to the clipboard
-    and can be pasted to Reddit's Markdown editor.
+    Methods
+    -------
+    clear()
+        Delete all text from editor.
+    done()
+        Copy markdown formatted codeblock to clipboard.
+    open()
+        Replace current text with file content.
     """
     def __init__(self):
         super().__init__()
@@ -60,7 +82,18 @@ class App(tk.Tk):
 
 
 class Buttons(ttk.Frame):
-    """A tkinter.Frame with Buttons."""
+    """
+    A ttk.Frame with Buttons.
+
+    The buttons call methods provided by parent.
+
+    Attributes
+    ----------
+    parent: class App
+    open: tkinter.Button
+    clear: tkinter.Button
+    done: tkinter.Button
+    """
     def __init__(self, parent):
         super().__init__(master=parent)
         self.open = ttk.Button(master=self, text="Open", command=parent.open_file)
@@ -73,7 +106,16 @@ class Buttons(ttk.Frame):
 
 
 class Editor(ttk.Frame):
-    """A tkinter.Frame showing a text widget with scrollbars."""
+    """
+    A ttk.Frame showing a text widget with scrollbars.
+
+    Attributes
+    ----------
+    text: ttk.Text
+        The editors text widget.
+    scb_vertical: ttk.Scrollbar
+    scb_horizontal: ttk.Scrollbar
+    """
     def __init__(self, parent):
         super().__init__(master=parent)
         self.text = tk.Text(

@@ -5,7 +5,7 @@ Reddit's Deluxe Editor is buggy when pasting.
 When using Markdown modus, a codeblock needs to have
 4 spaces preceding every line.
 
-Iunsert and edit your code here and click "Done".
+Insert and edit your code here and click "Done".
 Your code, including the extra spaces as well as empty lines before and after,
 gets copied to the clipboard and can be pasted to Reddit's Markdown editor.
 
@@ -21,7 +21,7 @@ Move the script file to a directory in your `$PATH` and give permission to run a
 Run by calling from command line.
 
 ## How to use
-* Enter text you want to see as codeblock on Reddit.
+* Enter text you want to insert as codeblock on Reddit.
 * Do some editing (optional).
 * Click "Done" to copy formatted code to clipboard.
 * Paste in Reddit's Markdown modus.
@@ -32,4 +32,4 @@ Run by calling from command line.
 * Load file contents by clicking "Open".
 
 # Disclaimer
-Tested on my machine, but that's about it.
+Runs on my Linux machine, but that's as far as testing went.
