@@ -98,11 +98,15 @@ class Buttons(ttk.Frame):
         super().__init__(master=parent)
         self.open = ttk.Button(master=self, text="Open", command=parent.open_file)
         self.clear = ttk.Button(master=self, text="Clear", command=parent.clear)
+        self.undo = ttk.Button(master=self, text="Undo", command=parent.editor.text.edit_undo)
+        self.redo = ttk.Button(master=self, text="Redo", command=parent.editor.text.edit_redo)
         self.done = ttk.Button(master=self, text="Done", command=parent.done)
 
         self.open.pack(side=tk.LEFT)
         self.clear.pack(side=tk.LEFT)
-        self.done.pack(side=tk.LEFT)
+        self.undo.pack(side=tk.LEFT)
+        self.redo.pack(side=tk.LEFT)
+        self.done.pack(side=tk.RIGHT, padx=25)
 
 
 class Editor(ttk.Frame):
@@ -123,7 +127,8 @@ class Editor(ttk.Frame):
             width=80, height=20,
             wrap=tk.NONE,
             padx=10, pady=5,
-            font="TkFixedFont"
+            font="TkFixedFont",
+            undo=True
         )
         self.scb_vertical = ttk.Scrollbar(self, orient=tk.VERTICAL, command=self.text.yview)
         self.scb_horizontal = ttk.Scrollbar(self, orient=tk.HORIZONTAL, command=self.text.xview)
