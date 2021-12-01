@@ -3,11 +3,14 @@
 A Python + Tkinter text editor that adds 4 spaces before every line.
 
 Reddit's Deluxe Editor is buggy when pasting.
-When pasting code in Markdown modus, a codeblock needs to have
+When pasting code in Markdown modus, a code block needs to have
 4 spaces preceding every line.
 
-Edit your code here and click "Done".
-Your code, including the extra spaces, gets copied to the clipboard
+Edit your code in this editor and click "Done".
+Empty lines preceding and trailing your code are added.
+4 leading spaces are added to every code line.
+The TAB character is replaced by 4 spaces.
+Your altered code gets copied to the clipboard
 and can be pasted to Reddit's Markdown editor.
 
 LICENSE: MIT
@@ -56,7 +59,7 @@ class App(tk.Tk):
     def done(self):
         """Copy markdown formatted codeblock to clipboard."""
         indent = 4 * " "
-        codeblock = "\n" + indent
+        codeblock = "\n" + indent  # precede with empty line
         for c in self.editor.text.get(1.0, "end-1c"):
             if c == "\n":
                 c += indent  # add 4 space indent to line break

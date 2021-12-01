@@ -1,13 +1,13 @@
 # Reddit Codeblock Pasting Crutch
 A Python + Tkinter text editor that adds 4 spaces before every line.
 
-Reddit's Deluxe Editor is buggy when pasting.
-When using Markdown modus, a codeblock needs to have
-4 spaces preceding every line.
+Reddit's Deluxe Editor is buggy when pasting. When using Markdown modus, a code block needs to have 4 spaces preceding every line.
 
-Insert and edit your code here and click "Done".
-Your code, including the extra spaces as well as empty lines before and after,
-gets copied to the clipboard and can be pasted to Reddit's Markdown editor.
+Edit your code in this editor and click "Done".
+* Empty lines preceding and trailing your code are added.
+* 4 leading spaces are added to every code line.
+* The TAB character is replaced by 4 spaces.
+Your altered code gets copied to the clipboard and can be pasted to Reddit's Markdown editor.
 
 ![redcode](https://user-images.githubusercontent.com/47459835/140605211-73c25937-57bb-4d03-82d6-8999a261ff89.png)
 
@@ -25,7 +25,7 @@ Run by calling from command line.
 ## How to use
 * Enter text you want to insert as codeblock on Reddit.
 * Do some editing (optional).
-* Click "Done" to copy formatted code to clipboard.
+* Click "Done" to copy re-formatted code to clipboard.
 * Paste in Reddit's Markdown modus.
 
 ## Entering text
