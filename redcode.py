@@ -52,6 +52,12 @@ class App(tk.Tk):
         self.button.pack(expand=True, fill=tk.X)
         self.editor.pack(expand=True, fill=tk.BOTH)
 
+        self.mainmenu = MainMenu(parent=self)
+        self.config(menu=self.mainmenu)
+
+    def about(self):
+        pass
+
     def clear(self):
         """Delete all text from editor."""
         self.editor.text.delete(1.0, "end")
@@ -76,6 +82,9 @@ class App(tk.Tk):
             message="Codeblock copied to clipboard.\nPaste on Reddit\nin Markdown modus."
         )
 
+    def help(self):
+        pass
+
     def open_file(self):
         """Replace current text with file content."""
         textfile = Path(filedialog.askopenfilename(
@@ -84,6 +93,9 @@ class App(tk.Tk):
         ))
         self.clear()
         self.editor.text.insert(1.0, textfile.read_text())
+
+    def settings(self):
+        pass
 
 
 class Buttons(ttk.Frame):
@@ -148,6 +160,32 @@ class Editor(ttk.Frame):
         self.text.grid(row=0, column=0, sticky=tk.NSEW)
         self.scb_vertical.grid(row=0, column=1, sticky=tk.NS)
         self.scb_horizontal.grid(row=1, column=0, sticky=tk.EW)
+
+
+class MainMenu(tk.Menu):
+    def __init__(self, parent):
+        super().__init__(master=parent)
+
+        filemenu = tk.Menu(self, tearoff=0)
+        filemenu.add_command(label="Open", command=parent.open_file)
+        filemenu.add_command(label="Done", command=parent.done)
+        filemenu.add_separator()
+        filemenu.add_command(label="Quit", command=parent.quit)
+        self.add_cascade(label="File", menu=filemenu)
+
+        editmenu = tk.Menu(self, tearoff=0)
+        editmenu.add_command(label="Clear", command=parent.clear)
+        editmenu.add_separator()
+        editmenu.add_command(label="Undo", command=parent.editor.text.edit_undo)
+        editmenu.add_command(label="Redo", command=parent.editor.text.edit_redo)
+        editmenu.add_separator()
+        editmenu.add_command(label="Settings", command=parent.settings)
+        self.add_cascade(label="Edit", menu=editmenu)
+
+        helpmenu = tk.Menu(self, tearoff=0)
+        helpmenu.add_command(label="Help", command=parent.help)
+        helpmenu.add_command(label="About", command=parent.about)
+        self.add_cascade(label="Help", menu=helpmenu)
 
 
 if __name__ == "__main__":
