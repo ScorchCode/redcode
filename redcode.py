@@ -17,6 +17,8 @@ LICENSE: MIT
 see https://github.com/ScorchCode/redcode/blob/main/LICENSE
 """
 
+import json
+import os
 from pathlib import Path
 import tkinter as tk
 from tkinter import filedialog, messagebox, ttk
@@ -45,6 +47,9 @@ class App(tk.Tk):
     def __init__(self):
         super().__init__()
         self.title("Reddit Codeblock Pasting Crutch")
+
+        self.settingspath = Path("settings.json")
+        self.settings = load_settings(self.settingspath)
 
         self.editor = Editor(parent=self)
         self.button = Buttons(parent=self)
@@ -87,15 +92,15 @@ class App(tk.Tk):
 
     def open_file(self):
         """Replace current text with file content."""
-        textfile = Path(filedialog.askopenfilename(
+        textfile = filedialog.askopenfilename(
             title="Open a file",
-            initialdir=Path("~").expanduser()
-        ))
-        self.clear()
-        self.editor.text.insert(1.0, textfile.read_text())
-
-    def settings(self):
-        pass
+            initialdir=Path(self.settings["loadfrom"])
+        )
+        if textfile:
+            self.clear()
+            self.editor.text.insert(1.0, Path(textfile).read_text())
+            self.settings["loadfrom"] = textfile
+            self.settingspath.write_text(json.dumps(self.settings, indent=2))
 
 
 class Buttons(ttk.Frame):
@@ -178,8 +183,6 @@ class MainMenu(tk.Menu):
         editmenu.add_separator()
         editmenu.add_command(label="Undo", command=parent.editor.text.edit_undo)
         editmenu.add_command(label="Redo", command=parent.editor.text.edit_redo)
-        editmenu.add_separator()
-        editmenu.add_command(label="Settings", command=parent.settings)
         self.add_cascade(label="Edit", menu=editmenu)
 
         helpmenu = tk.Menu(self, tearoff=0)
@@ -188,6 +191,17 @@ class MainMenu(tk.Menu):
         self.add_cascade(label="Help", menu=helpmenu)
 
 
+def load_settings(filepath):
+    try:
+        sett = json.loads(filepath.read_text())
+    except FileNotFoundError:
+        sett = {"loadfrom": str(Path.home())}
+        filepath.write_text(json.dumps(sett, indent=2))
+    return sett
+
+
 if __name__ == "__main__":
+    os.chdir(Path(__file__).parent)
+
     app = App()
     app.mainloop()

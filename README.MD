@@ -35,5 +35,8 @@ Run by calling from command line.
 * Copy & Paste existing code or
 * Load file contents by clicking "Open".
 
+## Open a file
+Search for a file to open, starting in the most recent directory.
+
 # Disclaimer
 Runs on my Linux machine, but that's as far as testing went.
