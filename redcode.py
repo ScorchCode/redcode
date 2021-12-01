@@ -133,6 +133,7 @@ class Editor(ttk.Frame):
             wrap=tk.NONE,
             padx=10, pady=5,
             font="TkFixedFont",
+            tabs="1c",
             undo=True
         )
         self.scb_vertical = ttk.Scrollbar(self, orient=tk.VERTICAL, command=self.text.yview)
