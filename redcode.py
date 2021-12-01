@@ -55,12 +55,14 @@ class App(tk.Tk):
 
     def done(self):
         """Copy markdown formatted codeblock to clipboard."""
-        indent = "    "
+        indent = 4 * " "
         codeblock = "\n" + indent
         for c in self.editor.text.get(1.0, "end-1c"):
-            codeblock += c
             if c == "\n":
-                codeblock += indent
+                c += indent  # add 4 space indent to line break
+            if c == "\t":
+                c = indent   # replace tab by 4 space indent
+            codeblock += c
         codeblock += "\n"
 
         self.clipboard_clear()
