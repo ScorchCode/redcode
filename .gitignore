@@ -2,4 +2,4 @@
 /__pycache__/
 /venv/
 .gitignore
-settings.json
+redcode_settings.json

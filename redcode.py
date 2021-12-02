@@ -48,8 +48,9 @@ class App(tk.Tk):
         super().__init__()
         self.title("Reddit Codeblock Pasting Crutch")
 
-        self.settingspath = Path("settings.json")
+        self.settingspath = Path("redcode_settings.json")
         self.settings = load_settings(self.settingspath)
+        self.openpath = Path(self.settings["loadfrom"])
 
         self.editor = Editor(parent=self)
         self.button = Buttons(parent=self)
@@ -61,11 +62,17 @@ class App(tk.Tk):
         self.config(menu=self.mainmenu)
 
     def about(self):
-        pass
+        lines = [
+            "Reddit Codeblock Pasting Crutch",
+            "A text editor that adds 4 spaces before every line.",
+            "MIT License, Henning 2021",
+            "https://github.com/ScorchCode/redcode"
+        ]
+        messagebox.showinfo("About", "\n".join(lines))
 
     def clear(self):
         """Delete all text from editor."""
-        self.editor.text.delete(1.0, "end")
+        self.editor.text.delete(1.0, tk.END)
 
     def done(self):
         """Copy markdown formatted codeblock to clipboard."""
@@ -94,12 +101,13 @@ class App(tk.Tk):
         """Replace current text with file content."""
         textfile = filedialog.askopenfilename(
             title="Open a file",
-            initialdir=Path(self.settings["loadfrom"])
+            initialdir=self.openpath
         )
         if textfile:
+            self.openpath = Path(textfile)
             self.clear()
-            self.editor.text.insert(1.0, Path(textfile).read_text())
-            self.settings["loadfrom"] = textfile
+            self.editor.text.insert(1.0, self.openpath.read_text())
+            self.settings["loadfrom"] = str(self.openpath)
             self.settingspath.write_text(json.dumps(self.settings, indent=2))
 
 
@@ -172,23 +180,23 @@ class MainMenu(tk.Menu):
         super().__init__(master=parent)
 
         filemenu = tk.Menu(self, tearoff=0)
+        self.add_cascade(label="File", menu=filemenu)
         filemenu.add_command(label="Open", command=parent.open_file)
         filemenu.add_command(label="Done", command=parent.done)
         filemenu.add_separator()
         filemenu.add_command(label="Quit", command=parent.quit)
-        self.add_cascade(label="File", menu=filemenu)
 
         editmenu = tk.Menu(self, tearoff=0)
+        self.add_cascade(label="Edit", menu=editmenu)
         editmenu.add_command(label="Clear", command=parent.clear)
         editmenu.add_separator()
         editmenu.add_command(label="Undo", command=parent.editor.text.edit_undo)
         editmenu.add_command(label="Redo", command=parent.editor.text.edit_redo)
-        self.add_cascade(label="Edit", menu=editmenu)
 
         helpmenu = tk.Menu(self, tearoff=0)
+        self.add_cascade(label="Help", menu=helpmenu)
         helpmenu.add_command(label="Help", command=parent.help)
         helpmenu.add_command(label="About", command=parent.about)
-        self.add_cascade(label="Help", menu=helpmenu)
 
 
 def load_settings(filepath):
@@ -200,8 +208,12 @@ def load_settings(filepath):
     return sett
 
 
-if __name__ == "__main__":
+def main():
     os.chdir(Path(__file__).parent)
 
     app = App()
     app.mainloop()
+
+
+if __name__ == "__main__":
+    main()
