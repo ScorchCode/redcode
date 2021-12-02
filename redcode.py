@@ -95,7 +95,11 @@ class App(tk.Tk):
         )
 
     def help(self):
-        pass
+        lines = [
+            "See README.MD or visit",
+            "https://github.com/ScorchCode/redcode"
+        ]
+        messagebox.showinfo("Help", "\n".join(lines))
 
     def open_file(self):
         """Replace current text with file content."""
