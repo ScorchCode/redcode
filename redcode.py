@@ -31,17 +31,29 @@ class App(tk.Tk):
     Attributes
     ----------
     editor: class Editor
-        A ttk.Frame showing Text and Scrollbars.
+        A ttk.Frame showing Text and Scrollbars
     button: class Buttons
-        A ttk.Frame with Buttons.
+        A ttk.Frame with Buttons
+    mainmenu: class MainMenu
+        Set up of a tk.Menu bar
+    settingspath: pathlib.Path
+        Where to find settings
+    settings: dict
+        User settings
+    openpath: pathlib.Path
+        Most recent directory to open text files from
 
     Methods
     -------
+    about()
+        Show About dialog.
     clear()
         Delete all text from editor.
     done()
         Copy markdown formatted codeblock to clipboard.
-    open()
+    help()
+        Show Help text.
+    open_file()
         Replace current text with file content.
     """
     def __init__(self):
@@ -180,6 +192,7 @@ class Editor(ttk.Frame):
 
 
 class MainMenu(tk.Menu):
+    """The main menu bar of the app."""
     def __init__(self, parent):
         super().__init__(master=parent)
 
@@ -204,6 +217,18 @@ class MainMenu(tk.Menu):
 
 
 def load_settings(filepath):
+    """
+    Load settings from json file.
+
+    Parameters
+    ----------
+    filepath: pathlib.Path
+        Where to find redcode_settings.json
+
+    Returns
+    -------
+    dict
+    """
     try:
         sett = json.loads(filepath.read_text())
     except FileNotFoundError:
