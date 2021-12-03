@@ -20,6 +20,7 @@ see https://github.com/ScorchCode/redcode/blob/main/LICENSE
 import json
 import os
 from pathlib import Path
+import re
 import tkinter as tk
 from tkinter import filedialog, messagebox, ttk
 
@@ -89,13 +90,16 @@ class App(tk.Tk):
     def done(self):
         """Copy markdown formatted codeblock to clipboard."""
         indent = 4 * " "
-        codeblock = "\n" + indent  # precede with empty line
-        for c in self.editor.text.get(1.0, "end-1c"):
-            if c == "\n":
-                c += indent  # add 4 space indent to line break
-            if c == "\t":
-                c = indent   # replace tab by 4 space indent
-            codeblock += c
+        # blank line + 1st loc gets indented
+        codeblock = "\n" + self.editor.text.get(1.0, "end").strip()
+
+        # add indent after every line break
+        codeblock = re.subn("\n", "\n"+indent, codeblock)[0]
+
+        # replace every tab with indent
+        codeblock = re.subn("\t", indent, codeblock)[0]
+
+        # add blank line without adding indent
         codeblock += "\n"
 
         self.clipboard_clear()
