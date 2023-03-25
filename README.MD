@@ -39,6 +39,11 @@ Installation on Windows may differ.
 
 TABs can't be set to a fixed number of characters. Their width is 1 cm here, but they will have 4 spaces after copying.
 
+## Censor text
+Sensitive information can be censored. Select text and click `Edit > Censor`. Text appears strikethrough and is blackened before being copied to clipboard.
+
+Issues: For now, there's no option to de-censor text. Also, censored text spanning multiple lines will remove the line break.
+
 ## Open a file
 Search for a file to open, starting in the most recent directory.
 

@@ -22,7 +22,7 @@ import os
 from pathlib import Path
 import re
 import tkinter as tk
-from tkinter import filedialog, messagebox, ttk
+from tkinter import filedialog, messagebox, ttk, TclError
 
 
 class App(tk.Tk):
@@ -48,6 +48,8 @@ class App(tk.Tk):
     -------
     about()
         Show About dialog.
+    censor()
+        Tag selected text as censored.
     clear()
         Delete all text from editor.
     done()
@@ -82,6 +84,12 @@ class App(tk.Tk):
             "https://github.com/ScorchCode/redcode"
         ]
         messagebox.showinfo("About", "\n".join(lines))
+        
+    def censor(self):
+        try:
+            self.editor.text.tag_add("censored", tk.SEL_FIRST, tk.SEL_LAST)
+        except TclError:
+            pass
 
     def clear(self):
         """Delete all text from editor."""
@@ -90,8 +98,23 @@ class App(tk.Tk):
     def done(self):
         """Copy markdown formatted codeblock to clipboard."""
         indent = 4 * " "
-        # blank line + 1st loc gets indented
-        codeblock = "\n" + self.editor.text.get(1.0, "end").strip()
+
+        # replace censored content
+        if "censored" in self.editor.text.tag_names():
+            blackend = "▒"
+            censored_ranges = self.editor.text.tag_ranges("censored")  # tuple (start1, stop1, start2, ...)
+            ranges = []  # rearrange to ((start1, stop1), (start2, stop2), ...)
+            for i in range(0, len(censored_ranges), 2):
+                ranges.append((censored_ranges[i], censored_ranges[i+1]))
+            for start, stop in ranges:
+                tl = len(self.editor.text.get(start, stop))
+                self.editor.text.delete(start, stop)
+                self.editor.text.insert(start, tl*blackend)
+
+
+        # blank line + 1st loc gets indented later
+        codeblock = "\n" + self.editor.text.get(1.0, tk.END).strip()
+
 
         # add indent after every line break
         codeblock = re.subn("\n", "\n"+indent, codeblock)[0]
@@ -107,7 +130,7 @@ class App(tk.Tk):
 
         messagebox.showinfo(
             title="Done",
-            message="Codeblock copied to clipboard.\nPaste on Reddit\nin Markdown modus."
+            message="Codeblock copied to clipboard.\nPaste on Reddit\nin Markdown mode."
         )
 
     def help(self):
@@ -181,6 +204,8 @@ class Editor(ttk.Frame):
             tabs="1c",
             undo=True
         )
+        self.text.tag_configure("censored", overstrike=True)
+
         self.scb_vertical = ttk.Scrollbar(self, orient=tk.VERTICAL, command=self.text.yview)
         self.scb_horizontal = ttk.Scrollbar(self, orient=tk.HORIZONTAL, command=self.text.xview)
 
@@ -210,6 +235,8 @@ class MainMenu(tk.Menu):
         editmenu = tk.Menu(self, tearoff=0)
         self.add_cascade(label="Edit", menu=editmenu)
         editmenu.add_command(label="Clear", command=parent.clear)
+        editmenu.add_separator()
+        editmenu.add_command(label="Censor", command=parent.censor)
         editmenu.add_separator()
         editmenu.add_command(label="Undo", command=parent.editor.text.edit_undo)
         editmenu.add_command(label="Redo", command=parent.editor.text.edit_redo)
